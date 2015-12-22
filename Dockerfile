@@ -17,10 +17,10 @@ RUN apt-get update && \
       useradd -m -d /home/cartodb -s /bin/bash cartodb && \
       apt-get install -y -q software-properties-common && \
       add-apt-repository -y ppa:chris-lea/node.js && \
-      apt-get update 
+      rm -rf /var/lib/apt/lists/*
 
 # Installing stuff 
-RUN apt-get install -y -q build-essential checkinstall unp zip libgeos-c1 \
+RUN apt-get update && apt-get install -y -q build-essential checkinstall unp zip libgeos-c1 \
       libgeos-dev libjson0 python-simplejson libjson0-dev proj-bin \
       proj-data libproj-dev postgresql-9.3 postgresql-client-9.3 \
       postgresql-contrib-9.3 postgresql-server-dev-9.3 \
@@ -33,7 +33,8 @@ RUN apt-get install -y -q build-essential checkinstall unp zip libgeos-c1 \
       libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf \
       libc6-dev ncurses-dev automake libtool bison subversion \
       pkg-config libpq5 libpq-dev libcurl4-gnutls-dev libffi-dev \
-      libgdbm-dev gnupg libreadline6-dev 
+      libgdbm-dev gnupg libreadline6-dev && \
+      rm -rf /var/lib/apt/lists/*
 
 # Setting PostgreSQL
 RUN sed -i 's/\(peer\|md5\)/trust/' /etc/postgresql/9.3/main/pg_hba.conf
